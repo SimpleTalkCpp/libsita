@@ -59,5 +59,6 @@ add_subdirectory(net/server/login)
 add_subdirectory(net/server/zone)
 add_subdirectory(net/examples/sita_net_example_001)
 
+add_subdirectory(render)
 
 
