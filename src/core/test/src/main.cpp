@@ -1,5 +1,5 @@
-#include <sita/core/base/UnitTest.h>
-#include <sita/core/log/Log.h>
+#include <sita_core/base/UnitTest.h>
+#include <sita_core/log/Log.h>
 
 // SITA_OPTIMIZE_OFF
 

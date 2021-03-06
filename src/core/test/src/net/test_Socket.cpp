@@ -1,5 +1,7 @@
-#include <sita/core/base/UnitTest.h>
-#include <sita/core/net/Socket.h>
+#include <sita_core/base/UnitTest.h>
+#include <sita_core/net/Socket.h>
+
+#include <EASTL/vector.h>
 
 namespace sita { namespace test {
 
@@ -7,6 +9,9 @@ class TestSocket : public UnitTestBase {
 public:
 	
 	void test_resolveIPv4() {
+		eastl::vector<int> a;
+
+
 		IPv4 ip;
 		ip.resolve("localhost");
 		SITA_DUMP_VAR(ip);

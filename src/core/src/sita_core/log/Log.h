@@ -1,8 +1,8 @@
 #pragma once
 
-#include <sita/core/base/sita_base.h>
-#include <sita/core/string/Fmt.h>
-#include <sita/core/string/String.h>
+#include <sita_core/base/sita_base.h>
+#include <sita_core/string/Fmt.h>
+#include <sita_core/string/String.h>
 
 #define SITA_LOG(...)       do{ sita::g_log.write(sita::Log::Level::Info,    __VA_ARGS__); } while(false)
 #define SITA_LOG_WARN(...)  do{ sita::g_log.write(sita::Log::Level::Warning, __VA_ARGS__); } while(false)

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <sita/sita_core.h>
+#include <sita_core.h>
 
 #define SDL_MAIN_HANDLED
 

@@ -8,6 +8,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 project(libsita)
 
 find_package(fmt CONFIG REQUIRED)
+find_package(eabase CONFIG REQUIRED)
 find_package(eastl CONFIG REQUIRED)
 find_package(imgui CONFIG REQUIRED)
 

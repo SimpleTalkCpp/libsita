@@ -1,4 +1,4 @@
-#include <sita/sita_core.h>
+#include <sita_core.h>
 #include "GameApp.h"
 
 namespace sita {

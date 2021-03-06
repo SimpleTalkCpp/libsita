@@ -1,7 +1,7 @@
 #pragma once
 
-#include <sita/core/base/sita_base.h>
-#include <sita/core/log/Log.h>
+#include <sita_core/base/sita_base.h>
+#include <sita_core/log/Log.h>
 
 #define	SITA_TEST_CASE(TestClass, TestFunc) \
 	do{ \
