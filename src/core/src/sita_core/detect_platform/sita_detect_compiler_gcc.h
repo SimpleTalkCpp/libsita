@@ -78,13 +78,13 @@
 
 
 #if defined(__x86_64__) || defined(__x86_64) || defined(__amd64) || defined(__amd64__)
-	#define SITA_CPU_x86_64      1
+	#define SITA_CPU_X86_64      1
 
 #elif defined(__i386__) || defined(__i486__) || defined(__i586__) || defined(__i686__)
-	#define SITA_CPU_x86         1
+	#define SITA_CPU_X86         1
 
 #elif defined(__POWERPC__)
-	#define SITA_CPU_PowerPC     1
+	#define SITA_CPU_POWERPC     1
 
 #elif defined(__aarch64__)
 	#define SITA_CPU_ARM64 1

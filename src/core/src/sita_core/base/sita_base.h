@@ -6,6 +6,11 @@
 	#include <WinSock2.h> // WinSock2.h must include before windows.h to avoid winsock1 define
 	#include <ws2tcpip.h> // struct sockaddr_in6
 	#pragma comment(lib, "Ws2_32.lib")
+#else
+	#include <sys/types.h>
+	#include <sys/socket.h>
+	#include <netdb.h>
+	#include <netinet/in.h> // struct sockaddr_in
 #endif
 
 #include <cassert>

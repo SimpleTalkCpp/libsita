@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.16)
 
 set(PROJECT_NAME sita_net_example_001)
 message("==== ${PROJECT_NAME} ====")
