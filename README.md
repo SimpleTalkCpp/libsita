@@ -21,3 +21,4 @@ sh install_vcpkg_packages.sh
 make
 make run
 ```
+- Or Visual Studio Code + CMake Tool in project folder
