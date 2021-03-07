@@ -7,7 +7,7 @@ gen_vs2019.bat
 ```
 - Open Visual Studio project in build/libstia-x64-windows
 
-![Visual Studio](doc/screenshot/2021-03-17_Project_Setup-Windows-half.png)
+![[<img src="doc/screenshot/2021-03-17_Project_Setup-Windows-quad.png">](doc/screenshot/2021-03-17_Project_Setup-Windows.png)]
 
 ## Mac
 ```
@@ -16,7 +16,7 @@ sh gen_xcode.sh
 ```
 - Open Xcode project in build/libstia-xcode
 
-![Xcode](doc/screenshot/2021-03-17_Project_Setup-Mac-half.png)
+![[<img src="doc/screenshot/2021-03-17_Project_Setup-Mac-quad.png">](doc/screenshot/2021-03-17_Project_Setup-Mac.png)]
 
 ## Ubuntu Linux
 ```
