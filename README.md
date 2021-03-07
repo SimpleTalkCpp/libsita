@@ -26,11 +26,7 @@ make
 make run
 ```
 
-## Visual Studio Code + Cmake Tool
-```
-sh install_ubunta_packages.sh
-sh install_vcpkg_packages.sh
-```
+## Visual Studio Code + Cmake Tool (Works on Win/Mac/Linux)
 - install vscode extension `CMake Tools` and `CMake`
 - Build and Run from bottom status bar
 
