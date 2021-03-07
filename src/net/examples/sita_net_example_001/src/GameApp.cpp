@@ -146,7 +146,7 @@ void GameAppImpl::_render() {
 GameAppImpl::GameAppImpl(GameApp* owner) 
     : _owner(owner)
 {
-    int error = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
+    int error = SDL_Init(SDL_INIT_EVERYTHING);
     if (error != 0)
         throw SITA_ERROR("Error SDL_Init err={}", error);
 
