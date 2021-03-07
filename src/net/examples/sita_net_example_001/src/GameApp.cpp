@@ -1,5 +1,3 @@
-#pragma once
-
 #include "GameApp.h"
 
 // About Desktop OpenGL function loaders:
@@ -148,8 +146,9 @@ void GameAppImpl::_render() {
 GameAppImpl::GameAppImpl(GameApp* owner) 
     : _owner(owner)
 {
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0)
-        throw SITA_ERROR("Error SDL_Init");
+    int error = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
+    if (error != 0)
+        throw SITA_ERROR("Error SDL_Init err={}", error);
 
     // Decide GL+GLSL versions
 #ifdef __APPLE__

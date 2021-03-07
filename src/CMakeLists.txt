@@ -2,14 +2,16 @@ cmake_minimum_required(VERSION 3.16)
 
 set(CMAKE_TOOLCHAIN_FILE "./externals/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_BUILD_TYPE Debug)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 project(libsita)
 
 find_package(fmt CONFIG REQUIRED)
-find_package(eabase CONFIG REQUIRED)
-find_package(eastl CONFIG REQUIRED)
+find_package(EABase CONFIG REQUIRED)
+find_package(EASTL CONFIG REQUIRED)
+find_package(SDL2 CONFIG REQUIRED)
 find_package(imgui CONFIG REQUIRED)
 
 
