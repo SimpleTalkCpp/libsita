@@ -21,4 +21,8 @@ sh install_vcpkg_packages.sh
 make
 make run
 ```
-- Or Visual Studio Code + CMake Tool in project folder
+
+## Visual Studio Code + Cmake Tool
+- install extension `CMake Tools` and `CMake`
+- Build and Run from bottom status bar
+![Linux + vscode + cmake tool](doc/screenshot/2021-03-17_Project_Setup-Linux.png)
