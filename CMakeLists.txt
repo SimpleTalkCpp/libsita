@@ -62,6 +62,7 @@ add_subdirectory(src/net/server/gateway)
 add_subdirectory(src/net/server/login)
 add_subdirectory(src/net/server/zone)
 add_subdirectory(src/net/examples/sita_net_example_001)
+add_subdirectory(src/net/examples/sita_net_example_002)
 
 add_subdirectory(src/render)
 
