@@ -44,8 +44,6 @@ using f128 = long double;
 
 template<class T> using Vector = std::vector<T>;
 
-using String = std::string;
-
 template<class T> inline constexpr typename std::underlying_type<T>::type         enum_int    (      T  value) { return       static_cast<      typename std::underlying_type<T>::type >( value); }
 template<class T> inline constexpr typename std::underlying_type<T>::type       & enum_int_ref(      T& value) { return *reinterpret_cast<      typename std::underlying_type<T>::type*>(&value); }
 template<class T> inline constexpr typename std::underlying_type<T>::type const & enum_int_ref(const T& value) { return *reinterpret_cast<const typename std::underlying_type<T>::type*>(&value); }
