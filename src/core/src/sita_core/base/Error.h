@@ -14,8 +14,8 @@ public:
 
 class Error : public IError {
 public:
-	Error() = default;
-	Error(const SrcLoc& loc, StrView msg) : _loc(loc), _msg(msg) {} 
+//	Error() = default;
+	Error(const SrcLoc& loc, const String& msg);
 
 private:
 	SrcLoc _loc;

@@ -3,9 +3,13 @@
 #include "../detect_platform/sita_detect_platform.h"
 
 #if SITA_OS_WINDOWS
+	#define NOMINMAX 1
+
 	#include <WinSock2.h> // WinSock2.h must include before windows.h to avoid winsock1 define
 	#include <ws2tcpip.h> // struct sockaddr_in6
 	#pragma comment(lib, "Ws2_32.lib")
+
+	#include <Windows.h>
 #else
 	#include <sys/types.h>
 	#include <sys/socket.h>
@@ -17,6 +21,7 @@
 #include <exception>
 #include <iostream>
 #include <stdint.h>
+#include <vector>
 #include <string>
 #include <string_view>
 
@@ -36,6 +41,10 @@ using i64 = int64_t;
 using f32 = float;
 using f64 = double;
 using f128 = long double;
+
+template<class T> using Vector = std::vector<T>;
+
+using String = std::string;
 
 template<class T> inline constexpr typename std::underlying_type<T>::type         enum_int    (      T  value) { return       static_cast<      typename std::underlying_type<T>::type >( value); }
 template<class T> inline constexpr typename std::underlying_type<T>::type       & enum_int_ref(      T& value) { return *reinterpret_cast<      typename std::underlying_type<T>::type*>(&value); }

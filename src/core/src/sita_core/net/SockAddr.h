@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../base/Error.h"
+#include "../log/Log.h"
 #include "../string/String.h"
 #include "../string/Fmt.h"
 
@@ -41,6 +42,12 @@ public:
 	using Family = SockAddrFamily;
 
 	void reset() { _addr.sa_family = 0; }
+
+#if SITA_OS_WINDOWS
+	using SockLen = int;
+#else
+	using SockLen = socklen_t;
+#endif
 
 	IPv4		ipv4	() const;
 	u16			port	() const;
