@@ -188,17 +188,17 @@ void Socket::setNonBlocking(bool b)
 #endif
 }
 
-int Socket::recv(Vector<u8> & buf, size_t bytesToRecv) {
+int Socket::recv(Vector<u8> & buf, size_t bytesToRecv, int flags) {
 	buf.clear();
-	return appendRecv(buf, bytesToRecv);
+	return appendRecv(buf, bytesToRecv, flags);
 }
 
-int Socket::recv(String & buf, size_t bytesToRecv) {
+int Socket::recv(String & buf, size_t bytesToRecv, int flags) {
 	buf.clear();
-	return appendRecv(buf, bytesToRecv);
+	return appendRecv(buf, bytesToRecv, flags);
 }
 
-int Socket::appendRecv(Vector<u8> & buf, size_t bytesToRecv) {
+int Socket::appendRecv(Vector<u8> & buf, size_t bytesToRecv, int flags) {
 	if (bytesToRecv > static_cast<size_t>(std::numeric_limits<int>::max()))
 		throw SITA_ERROR("recv bytesToRecv is too big");
 
@@ -208,7 +208,7 @@ int Socket::appendRecv(Vector<u8> & buf, size_t bytesToRecv) {
 		throw SITA_ERROR("vector size > size_t");
 
 	buf.resize(newSize);
-	int ret = recv(&buf[oldSize], bytesToRecv);
+	int ret = recv(&buf[oldSize], bytesToRecv, flags);
 	if (ret <= 0) {
 		buf.resize(oldSize);
 		return ret;
@@ -218,7 +218,7 @@ int Socket::appendRecv(Vector<u8> & buf, size_t bytesToRecv) {
 	return ret;
 }
 
-int Socket::appendRecv(String & buf, size_t bytesToRecv) {
+int Socket::appendRecv(String & buf, size_t bytesToRecv, int flags) {
 	if (bytesToRecv > static_cast<size_t>(std::numeric_limits<int>::max()))
 		throw SITA_ERROR("recv bytesToRecv is too big");
 
@@ -228,7 +228,7 @@ int Socket::appendRecv(String & buf, size_t bytesToRecv) {
 		throw SITA_ERROR("vector size > size_t");
 
 	buf.resize(newSize);
-	int ret = recv(reinterpret_cast<u8*>(&buf[oldSize]), bytesToRecv);
+	int ret = recv(reinterpret_cast<u8*>(&buf[oldSize]), bytesToRecv, flags);
 	if (ret <= 0) {
 		buf.resize(oldSize);
 		return ret;
@@ -238,12 +238,12 @@ int Socket::appendRecv(String & buf, size_t bytesToRecv) {
 	return ret;
 }
 
-int Socket::recv(u8* buf, size_t bytesToRecv) {
+int Socket::recv(u8* buf, size_t bytesToRecv, int flags) {
 	if (!isValid()) return 0;
 
 	if (bytesToRecv > static_cast<size_t>(std::numeric_limits<int>::max()))
 		throw SITA_ERROR("recv bytesToRecv is too big");
-	int ret = ::recv(_sock, reinterpret_cast<char*>(buf), static_cast<int>(bytesToRecv), 0);
+	int ret = ::recv(_sock, reinterpret_cast<char*>(buf), static_cast<int>(bytesToRecv), flags);
 	return ret;
 }
 

@@ -51,12 +51,12 @@ public:
 
 	size_t availableBytesToRead();
 
-	int recv(u8* buf, size_t bytesToRecv);
-	int recv(Vector<u8> & buf, size_t bytesToRecv);
-	int recv(String & buf, size_t bytesToRecv);
+	int recv(u8* buf, size_t bytesToRecv, int flags);
+	int recv(Vector<u8> & buf, size_t bytesToRecv, int flags);
+	int recv(String & buf, size_t bytesToRecv, int flags);
 
-	int appendRecv(Vector<u8> & buf, size_t bytesToRecv);
-	int appendRecv(String & buf, size_t bytesToRecv);
+	int appendRecv(Vector<u8> & buf, size_t bytesToRecv, int flags);
+	int appendRecv(String & buf, size_t bytesToRecv, int flags);
 
 	int recvfrom(SockAddr& addr, Vector<u8> & buf, size_t bytesToRecv);
 

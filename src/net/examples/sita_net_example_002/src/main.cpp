@@ -144,7 +144,7 @@ public:
 			size_t n = _sock.availableBytesToRead();
 			if (n <= 0) return;
 
-			int ret = _sock.appendRecv(_sockBuf, n);
+			int ret = _sock.appendRecv(_sockBuf, n, 0);
 			if (ret <= 0) {
 				setDisconnected();
 			}
