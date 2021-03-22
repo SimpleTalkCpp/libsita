@@ -4,6 +4,7 @@
 
 namespace sita {
 
+// OOP - BSD socket
 class Socket : public NonCopyable {
 public:
 	using SockLen = SockAddr::SockLen;
