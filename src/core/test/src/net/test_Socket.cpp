@@ -5,7 +5,7 @@
 
 namespace sita { namespace test {
 
-class TestSocket : public UnitTestBase {
+class Test_Socket : public UnitTestBase {
 public:
 	
 	void test_resolveIPv4() {
@@ -23,5 +23,5 @@ public:
 }} // namespace 
 
 void test_Socket() {
-	SITA_TEST_CASE(TestSocket, test_resolveIPv4());
+	SITA_TEST_CASE(Test_Socket, test_resolveIPv4());
 }

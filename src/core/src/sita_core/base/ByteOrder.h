@@ -18,6 +18,9 @@ public:
 		constexpr static i16 get(i16 v) { return v; }
 		constexpr static i32 get(i32 v) { return v; }
 		constexpr static i64 get(i64 v) { return v; }
+
+		constexpr static i32 get(f32 v) { return v; }
+		constexpr static i64 get(f64 v) { return v; }
 	};
 
 	class ByteSwap {
@@ -38,6 +41,15 @@ public:
 		constexpr static i16 get(i16 v) { return static_cast<i16>(get(static_cast<u16>(v))); }
 		constexpr static i32 get(i32 v) { return static_cast<i32>(get(static_cast<u32>(v))); }
 		constexpr static i64 get(i64 v) { return static_cast<i64>(get(static_cast<u64>(v))); }
+
+		SITA_INLINE static f32 get(f32 v) {
+			u32 tmp = get(*reinterpret_cast<const u32*>(&v));
+			return *reinterpret_cast<const f32*>(&tmp);
+		}
+		SITA_INLINE static f64 get(f64 v) {
+			u64 tmp = get(*reinterpret_cast<const u64*>(&v));
+			return *reinterpret_cast<const f64*>(&tmp);
+		}
 	};
 
 #if SITA_CPU_ENDIAN_LITTLE

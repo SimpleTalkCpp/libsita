@@ -21,7 +21,7 @@ public:
 	virtual void onRecvPacket	(NESocket* s, const NEPacketHeader& hdr, const u8* data);
 	virtual void onRecv			(NESocket* s);
 
-	void send(NESocket* s, data);
+	void send(NESocket* s, const u8* data, size_t dataSize);
 
 private:
 	size_t _maxPacketSize = 4096;

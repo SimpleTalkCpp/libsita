@@ -77,7 +77,7 @@ private:
 	class PlatformInit {
 	public:
 		PlatformInit();
-		~PlatformInit();
+		~PlatformInit();	
 	};
 };
 

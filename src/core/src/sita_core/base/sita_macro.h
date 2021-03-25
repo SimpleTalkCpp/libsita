@@ -18,7 +18,13 @@
 #define SITA_DUMP_VAR_SELECT(COUNT) SITA_DUMP_VAR_##COUNT
 #define SITA_DUMP_VAR(...) SITA_IDENTITY(SITA_CALL(SITA_DUMP_VAR_SELECT, SITA_VA_ARGS_COUNT(__VA_ARGS__) (__VA_ARGS__)))
 
-#define SITA_DUMP_HEX(v)	do{ g_log.logHex(SITA_SRC_LOC, Log::Level::Info, fmt::format("DUMP_HEX: {}", #v), v); } while(false)
+#define SITA_DUMP_HEX(v) \
+	do{ \
+		String tmp; \
+		StringUtil::binToHex(tmp, v); \
+		SITA_LOG("DUMP_HEX: {}\n{}", #v, tmp); \
+	} while(false) \
+//------
 
 #define SITA_FORWARD(a)	::std::forward< decltype(a) >(a)
 #define SITA_ASSERT(...)	assert(__VA_ARGS__)

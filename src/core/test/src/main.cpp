@@ -10,10 +10,13 @@
 //----
 
 void run_temp_test() {
-	RUN_TEST(test_Socket);
+	RUN_TEST(test_BinSerializer);
 }
 
 void run_all_test() {
+// base
+	RUN_TEST(test_BinSerializer);
+
 // string
 //	RUN_TEST(test_String);
 
