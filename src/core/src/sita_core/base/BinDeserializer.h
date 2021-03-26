@@ -92,12 +92,11 @@ void BinDeserializer::_io_fixed(T& value) {
 template<class T> SITA_INLINE
 void BinDeserializer::_io_vary_unsigned(T& value) {
 	size_t bit = 0;
-	u8 t;
 	value = 0;
 	for(;;){
-		t = *_advance(1);
+		u8 t = *_advance(1);
 		value |= static_cast<T>( t & 0x7F ) << bit;
-		if( !( t & 0x80 ) ) return;
+		if((t & 0x80) == 0) return;
 		bit += 7;
 		if( bit > sizeof(T) * 8 ) {
 			throw SITA_ERROR("BinDeserializer out of range");

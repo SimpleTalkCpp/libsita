@@ -30,7 +30,7 @@ void StringUtil::appendBinToHex(String& result, const u8* data, size_t dataSize)
 			if (index < dataSize) {
 				u8 v = data[index];
 				if (v < 32) {
-					result.push_back(' '); // non-printablee character
+					result.push_back(' '); // non-printable character
 				} else {
 					result.push_back(v);
 				}

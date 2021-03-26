@@ -114,7 +114,7 @@ public:
 void test_BinSerializer() {
 	SITA_TEST_CASE(Test_BinSerializer, test_class());
 
-#if 0
+#if 1
 	SITA_TEST_CASE(Test_BinSerializer, test_fixed<u8 >(0x100ULL,              1));
 	SITA_TEST_CASE(Test_BinSerializer, test_fixed<u16>(0x10000ULL,            1));
 	SITA_TEST_CASE(Test_BinSerializer, test_fixed<u32>(0x100000000ULL,        0xF1));
@@ -126,7 +126,7 @@ void test_BinSerializer() {
 //	SITA_TEST_CASE(Test_BinSerializer, test_fixed<i64>(0xFFFFFFFFFFFFFFFFULL, 1));
 #endif
 
-#if 0
+#if 1
 	SITA_TEST_CASE(Test_BinSerializer, test_vary<u8 >(0x100ULL,              1));
 	SITA_TEST_CASE(Test_BinSerializer, test_vary<u16>(0x10000ULL,            1));
 	SITA_TEST_CASE(Test_BinSerializer, test_vary<u32>(0x100000000ULL,        0xF1));
@@ -138,7 +138,7 @@ void test_BinSerializer() {
 //	SITA_TEST_CASE(Test_BinSerializer, test_vary<i64>(0xFFFFFFFFFFFFFFFFULL, 1));
 #endif
 
-#if 0
+#if 1
 	SITA_TEST_CASE(Test_BinSerializer, test_float<f32>(0x100000,       110.3f));
 	SITA_TEST_CASE(Test_BinSerializer, test_float<f64>(0x100000,       110.3 ));
 

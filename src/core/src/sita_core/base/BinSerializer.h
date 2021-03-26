@@ -87,9 +87,7 @@ void BinSerializer::_io_vary_unsigned(T& value) {
 		u8 highBit = tmp >= 0x80 ? 0x80 : 0;
 		_buf->push_back(static_cast<u8>(tmp) | highBit);
 		tmp >>= 7;
-		if (tmp == 0) {
-			return;
-		}
+		if (tmp == 0) return;
 	}
 	throw SITA_ERROR("BinSerializer::_io_vary_unsigned");
 }
