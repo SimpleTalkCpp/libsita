@@ -51,23 +51,29 @@ public:
 			return *reinterpret_cast<const f64*>(&tmp);
 		}
 	};
-
-#if SITA_CPU_ENDIAN_LITTLE
-	using LEtoHost   = Straight;
-	using LEfromHost = Straight;
-
-	using BEtoHost   = ByteSwap;
-	using BEfromHost = ByteSwap;
-#endif
-
-#if SITA_CPU_ENDIAN_BIG
-	using LEtoHost   = ByteSwap;
-	using LEfromHost = ByteSwap;
-
-	using BEtoHost   = Straight;
-	using BEfromHost = Straight;
-#endif
-
 };
+
+class LittleEndian { // little endian
+public:
+#if SITA_CPU_ENDIAN_LITTLE
+	using ToHost   = ByteOrder::Straight;
+	using FromHost = ByteOrder::Straight;
+#elif SITA_CPU_ENDIAN_BIG
+	using ToHost   = ByteOrder::ByteSwap;
+	using FromHost = ByteOrder::ByteSwap;
+#endif
+};
+
+class BigEndian {
+public:
+#if SITA_CPU_ENDIAN_LITTLE
+	using ToHost   = ByteOrder::ByteSwap;
+	using FromHost = ByteOrder::ByteSwap;
+#elif SITA_CPU_ENDIAN_BIG
+	using ToHost   = ByteOrder::Straight;
+	using FromHost = ByteOrder::Straight;
+#endif
+};
+
 
 } // namespace

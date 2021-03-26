@@ -12,6 +12,7 @@ class BinDeserializer : public NonCopyable {
 public:
 	BinDeserializer(const u8* data, size_t dataSize) 
 		: _data(data)
+		, _cur(data)
 		, _end(data + dataSize)
 	{}
 
@@ -84,7 +85,7 @@ SITA_INLINE const u8* BinDeserializer::_advance(size_t n) {
 template<class T> SITA_INLINE
 void BinDeserializer::_io_fixed(T& value) {
 	auto* p = _advance(sizeof(value));
-	value = ByteOrder::LEtoHost::get(*reinterpret_cast<const T*>(p));
+	value = LittleEndian::ToHost::get(*reinterpret_cast<const T*>(p));
 }
 
 template<class T> SITA_INLINE
@@ -105,6 +106,8 @@ void BinDeserializer::_io_vary_unsigned(T& value) {
 
 template<class U, class T> SITA_INLINE
 void BinDeserializer::_io_vary_signed(T& value) {
+// ZigZag encoding - https://developers.google.com/protocol-buffers/docs/encoding
+	static_assert(sizeof(U) == sizeof(T));
 	U tmp;
 	_io_vary_unsigned(tmp);
 	value = static_cast<T>((tmp >> 1) ^ ( -(tmp & 1)));

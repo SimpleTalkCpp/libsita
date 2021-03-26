@@ -68,18 +68,31 @@ u8* BinSerializer::_advance(size_t n) {
 }
 
 template<class T> SITA_INLINE
+void BinSerializer::_io_fixed(T& value) {
+	auto* p = _advance(sizeof(value));
+	*reinterpret_cast<T*>(p) = LittleEndian::FromHost::get(value);
+}
+
+template<class T> SITA_INLINE
 void BinSerializer::_io_vary_unsigned(T& value) {
 	T tmp = value;
-	u8 bit7 = 0;
 	for(;;) {
-		_buf->push_back(static_cast<u8>(tmp & 0x7f) | bit7);
+		u8 highBit = tmp >= 0x80 ? 0x80 : 0;
+		_buf->push_back(static_cast<u8>(tmp) | highBit);
 		tmp >>= 7;
 		if (tmp == 0) {
 			return;
 		}
-		bit7 = 0x80;
 	}
 	throw SITA_ERROR("BinSerializer::_io_vary_unsigned");
+}
+
+template<class U, class T> SITA_INLINE
+void BinSerializer::_io_vary_signed(T& value) {
+// ZigZag encoding - https://developers.google.com/protocol-buffers/docs/encoding
+	static_assert(sizeof(U) == sizeof(T));
+	U tmp = static_cast<U>( ( value << 1 ) ^ ( value >> (sizeof(T)*8-1) ) );
+	_io_vary_unsigned(tmp);
 }
 
 } // namespace
