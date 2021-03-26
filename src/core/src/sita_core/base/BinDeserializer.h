@@ -1,8 +1,6 @@
 #pragma once
 
-#include "sita_base.h"
-#include "Error.h"
-#include "ByteOrder.h"
+#include "BinSerializer.h"
 
 namespace sita {
 
@@ -33,7 +31,11 @@ public:
 	SITA_INLINE void io(f32& value)	{ io_fixed(value); }
 	SITA_INLINE void io(f64& value)	{ io_fixed(value); }
 
-	template<class T> void io(T& value);
+	template<class T> SITA_INLINE
+	void io(T& value) { BinSerilizer_io(*this, value); }
+
+	template<class T> SITA_INLINE
+	BinDeserializer& operator<<(T& value) { io(value); return *this; }
 
 //----------
 	SITA_INLINE void io_fixed(i8 & value)	{ _io_fixed(value); }
@@ -58,7 +60,6 @@ public:
 	SITA_INLINE void io_vary(u16& value)	{ _io_vary_unsigned(value); }
 	SITA_INLINE void io_vary(u32& value)	{ _io_vary_unsigned(value); }
 	SITA_INLINE void io_vary(u64& value)	{ _io_vary_unsigned(value); }
-
 
 	SITA_INLINE size_t remain() const { return _end - _cur; }
 	SITA_INLINE const u8* _advance(size_t n);

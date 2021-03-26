@@ -9,9 +9,14 @@ public:
 	using Len = u16;
 	using Cmd = u32;
 
-
 	Len len = 0;
 	Cmd cmd = 0;
+
+	template<class SE>
+	void io(SE& se) {
+		se.io_fixed(len);
+		se.io(cmd);
+	}
 };
 
 class NEPacket {

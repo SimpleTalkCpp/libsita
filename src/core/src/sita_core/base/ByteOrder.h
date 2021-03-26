@@ -19,8 +19,8 @@ public:
 		constexpr static i32 get(i32 v) { return v; }
 		constexpr static i64 get(i64 v) { return v; }
 
-		constexpr static i32 get(f32 v) { return v; }
-		constexpr static i64 get(f64 v) { return v; }
+		constexpr static f32 get(f32 v) { return v; }
+		constexpr static f64 get(f64 v) { return v; }
 	};
 
 	class ByteSwap {

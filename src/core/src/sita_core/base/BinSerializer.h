@@ -6,6 +6,9 @@
 
 namespace sita {
 
+template<class SE, class T> SITA_INLINE
+void BinSerilizer_io(SE& se, T& value) { value.io(se); }
+
 class BinSerializer : public NonCopyable {
 public:
 	BinSerializer(Vector<u8>& buf) : _buf(&buf) {}
@@ -23,7 +26,11 @@ public:
 	SITA_INLINE void io(f32& value)	{ io_fixed(value); }
 	SITA_INLINE void io(f64& value)	{ io_fixed(value); }
 
-	template<class T> void io(T& value);
+	template<class T> SITA_INLINE
+	void io(T& value) { BinSerilizer_io(*this, value); }
+
+	template<class T> SITA_INLINE
+	BinSerializer& operator<<(T& value) { io(value); return *this; }
 
 //-----------
 	SITA_INLINE void io_fixed(i8 & value)	{ _io_fixed(value); }
