@@ -93,7 +93,7 @@ template<class T> SITA_INLINE
 void BinDeserializer::_io_vary_unsigned(T& value) {
 	size_t bit = 0;
 	value = 0;
-	for(;;){
+	for(size_t i = 0; i < sizeof(T) + 1; i++) {
 		u8 t = *_advance(1);
 		value |= static_cast<T>( t & 0x7F ) << bit;
 		if((t & 0x80) == 0) return;

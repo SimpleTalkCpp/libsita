@@ -83,7 +83,7 @@ void BinSerializer::_io_fixed(T& value) {
 template<class T> SITA_INLINE
 void BinSerializer::_io_vary_unsigned(T& value) {
 	T tmp = value;
-	for(;;) {
+	for(size_t i = 0; i < sizeof(T) + 1; i++) {
 		u8 highBit = tmp >= 0x80 ? 0x80 : 0;
 		_buf->push_back(static_cast<u8>(tmp) | highBit);
 		tmp >>= 7;
