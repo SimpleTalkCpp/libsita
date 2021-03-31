@@ -2,6 +2,13 @@
 
 namespace sita {
 
+void NetEngine::update() {
+	for (; all sockets;) {
+		
+		onRecv(sock);
+	}
+}
+
 void NetEngine::onRecv(NESocket* s) {
 	if (!s) return;
 
