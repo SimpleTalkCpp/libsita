@@ -135,8 +135,6 @@ void test_BinSerializer() {
 
 	SITA_TEST_CASE(Test_BinSerializer, test_class());
 
-	return;
-
 #if 1
 	SITA_TEST_CASE(Test_BinSerializer, test_fixed<u8 >(0x100ULL,              1));
 	SITA_TEST_CASE(Test_BinSerializer, test_fixed<u16>(0x10000ULL,            1));

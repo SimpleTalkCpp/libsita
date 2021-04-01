@@ -103,8 +103,8 @@ public:
 };
 
 using String = eastl::string;
-template<size_t N = 32, bool bEnableOverflow = true> using String_ = StringT<char, N, bEnableOverflow>;
-using TempString = String_<256>;
+template<size_t N, bool bEnableOverflow = true> using String_ = StringT<char, N, bEnableOverflow>;
+using TempString = String_<220>;
 
 //! Source Location
 class SrcLoc {

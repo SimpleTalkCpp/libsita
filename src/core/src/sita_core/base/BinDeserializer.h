@@ -8,14 +8,10 @@ class BinDeserializer;
 
 class BinDeserializer : public NonCopyable {
 public:
-	BinDeserializer(const u8* data, size_t dataSize) 
-		: _data(data)
-		, _cur(data)
-		, _end(data + dataSize)
-	{}
-
-	BinDeserializer(const Vector<u8>& v)
-		: BinDeserializer(v.data(), v.size())
+	BinDeserializer(Span<const u8> data) 
+		: _data(data.data())
+		, _cur(data.data())
+		, _end(data.end())
 	{}
 
 	SITA_INLINE void io(i8 & value)	{ io_vary(value); }

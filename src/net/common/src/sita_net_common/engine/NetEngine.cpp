@@ -26,7 +26,7 @@ void NetEngine::onRecv(NESocket* s) {
 		}
 
 		int ret = s->_sock.recv(_recvPacketBuf, sizeof(hdr.len), MSG_PEEK);
-		if (ret <= 0) {
+		if (ret <= sizeof(hdr.len)) {
 			// error or disconnected
 		}
 
@@ -39,14 +39,17 @@ void NetEngine::onRecv(NESocket* s) {
 			break;
 
 		ret = s->_sock.recv(_recvPacketBuf, hdr.len, 0);
-		if (ret <= 0) {
+		if (ret <= hdr.len) {
 			// error or disconnected
 		}
 
 		{
 			BinDeserializer se(_recvPacketBuf);
 			se.io(hdr);
-			onRecvPacket(s, hdr, _recvPacketBuf.data());
+		}
+		{
+			BinDeserializer se(_recvPacketBuf);
+			onRecvPacket(s, hdr, se);
 		}
 	}
 

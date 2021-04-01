@@ -18,7 +18,7 @@ public:
 	virtual void onConnect		(NESocket* s) {}
 	virtual void onDisconnect	(NESocket* s) {}
 
-	virtual void onRecvPacket	(NESocket* s, const NEPacketHeader& hdr, const u8* data) {}
+	virtual void onRecvPacket	(NESocket* s, const NEPacketHeader& hdr, BinDeserializer& se) {}
 	virtual void onRecv			(NESocket* s);
 
 	template<class Packet>
