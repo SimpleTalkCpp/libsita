@@ -86,11 +86,11 @@ public:
 	}
 
 	virtual void onDisconnect(NESocket* s) override {
-		SITA_LOG("onDisconnect");
+//		SITA_LOG("onDisconnect");
 	}
 
 	virtual void onError(NESocket* s, const Error& err) override {
-		SITA_LOG("onError");
+//		SITA_LOG("onError");
 	}
 
 
@@ -154,8 +154,8 @@ public:
 			auto& ss = _netEngine.recvStatis();
 
 			ImGui::Text("statistics:\n"
-						"  recv %10llu kB, total %10llu kB\n"
-						"  send %10llu kB, total %10llu kB\n"
+						"  recv %10llu kB/s, total %10llu kB\n"
+						"  send %10llu kB/s, total %10llu kB\n"
 						, rs.lastSecond / 1024, rs.total / 1024
 						, ss.lastSecond / 1024, rs.total / 1024
 						);
