@@ -60,9 +60,12 @@
 
 namespace sita {
 
-template<class T> inline constexpr typename std::underlying_type<T>::type         enum_int    (      T  value) { return       static_cast<      typename std::underlying_type<T>::type >( value); }
-template<class T> inline constexpr typename std::underlying_type<T>::type       & enum_int_ref(      T& value) { return *reinterpret_cast<      typename std::underlying_type<T>::type*>(&value); }
-template<class T> inline constexpr typename std::underlying_type<T>::type const & enum_int_ref(const T& value) { return *reinterpret_cast<const typename std::underlying_type<T>::type*>(&value); }
+template<class T> inline constexpr typename std::underlying_type<T>::type         enumInt   (      T  value) { return       static_cast<      typename std::underlying_type<T>::type >( value); }
+template<class T> inline constexpr typename std::underlying_type<T>::type       & enumIntRef(      T& value) { return *reinterpret_cast<      typename std::underlying_type<T>::type*>(&value); }
+template<class T> inline constexpr typename std::underlying_type<T>::type const & enumIntRef(const T& value) { return *reinterpret_cast<const typename std::underlying_type<T>::type*>(&value); }
+
+template<class T> SITA_INLINE T* constCast(const T* v) { return const_cast<T*>(v); }
+template<class T> SITA_INLINE T& constCast(const T& v) { return const_cast<T&>(v); }
 
 using u8  = uint8_t;
 using u16 = uint16_t;

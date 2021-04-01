@@ -1,9 +1,37 @@
-#include "GameApp.h"
-#include "Player.h"
+#include <sita_imgui.h>
 
 namespace sita {
 
-class MyApp : public GameApp {
+class Player {
+public:
+	bool isActive() const { return _active; }
+	void setActive(bool b) { _active = b; }
+
+	void draw() {
+		if (!_active) return;
+
+		auto* drawList = ImGui::GetBackgroundDrawList();
+
+		drawList->AddTriangleFilled(ImVec2(_pos.x, _pos.y - 12),
+			ImVec2(_pos.x - 12, _pos.y + 12),
+			ImVec2(_pos.x + 12, _pos.y + 12),
+			_color);
+	}
+
+	void move(const ImVec2& v) { _pos += v; }
+	void setPos(const ImVec2& v) { _pos = v; }
+	const ImVec2& pos() const { return _pos; }
+
+	void setColor(const ImColor& color) { _color = color; }
+	const ImColor& color() const { return _color; }
+
+private:
+	bool _active = false;
+	ImVec2 _pos;
+	ImColor _color {255, 255, 255, 255};
+};
+
+class MyApp : public ImGuiApp {
 public:
 	Player player;
 	Player anotherPlayer;
@@ -20,6 +48,8 @@ public:
 	bool isHost() const { return _listenSock.isValid(); }
 
 	virtual void onInit() override {
+		setTitle("sita_net_example_002");
+
 		player.setActive(true);
 		player.setPos({
 			static_cast<float>(rand() % 1000 + 100),
@@ -56,7 +86,7 @@ public:
 					_sock.send(Fmt("color {} {} {}\n", col.x, col.y, col.z));
 
 					isConnected = true;
-				} catch (const Error&) {
+				} catch (...) {
 					SITA_LOG("error listen");
 				}
 			}
@@ -71,7 +101,7 @@ public:
 					_sock.send(Fmt("color {} {} {}\n", col.x, col.y, col.z));
 
 					isConnected = true;
-				} catch (const Error&) {
+				} catch (...) {
 					SITA_LOG("error connect");
 				}
 			}

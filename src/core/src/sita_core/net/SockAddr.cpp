@@ -45,7 +45,7 @@ SockAddr::Family SockAddr::family() const {
 }
 
 void SockAddr::setFamily(Family f) {
-	_addr.sa_family = enum_int(f);
+	_addr.sa_family = enumInt(f);
 }
 
 void SockAddr::resolve(StrView hostname, u16 port, Family family) {
@@ -60,7 +60,7 @@ bool SockAddr::tryResolve(StrView hostname, u16 port, Family family) {
 	TempString hostnameStr(hostname);
 
 	struct addrinfo hints = {};
-	hints.ai_family = enum_int(family);
+	hints.ai_family = enumInt(family);
 
 	struct addrinfo* result = nullptr;
 

@@ -10,12 +10,6 @@ class NESocket {
 public:
 	void setUserData(void* p) { _userData = p; }
 	void* userData() { return _userData; }
-	
-	template<class T>
-	void sendPacket(T& pkt) {
-		
-		BinSerializer se()
-	}
 
 friend class NetEngine;
 protected:

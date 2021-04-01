@@ -1,11 +1,14 @@
-#include <sita_core.h>
-#include "GameApp.h"
+#include <sita_imgui.h>
 
 namespace sita {
 
-class MyApp : public GameApp {
+class MyApp : public ImGuiApp {
 public:
 	ImVec2 playerPos {400,300};
+
+	virtual void onInit() override {
+		setTitle("sita_net_example_001");
+	}
 
 	virtual void onUpdate(float deltaTime) {
 

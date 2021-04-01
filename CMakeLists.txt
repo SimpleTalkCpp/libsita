@@ -50,10 +50,11 @@ function(sita_add_executable target_name src_path)
 	target_precompile_headers(${target_name} INTERFACE src/${target_name}/${target_name}-pch.h)
 endfunction()
 
-
+#-- core ---
 add_subdirectory(src/core)
 add_subdirectory(src/core/test)
 
+#--- net ---
 add_subdirectory(src/net/common)
 add_subdirectory(src/net/client)
 add_subdirectory(src/net/server/base)
@@ -63,7 +64,11 @@ add_subdirectory(src/net/server/login)
 add_subdirectory(src/net/server/zone)
 add_subdirectory(src/net/examples/sita_net_example_001)
 add_subdirectory(src/net/examples/sita_net_example_002)
+add_subdirectory(src/net/examples/sita_net_example_003)
 
+#--- render ---
 add_subdirectory(src/render)
 
+#--- other ---
+add_subdirectory(src/imgui)
 

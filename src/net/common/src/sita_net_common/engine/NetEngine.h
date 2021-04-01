@@ -22,14 +22,7 @@ public:
 	virtual void onRecv			(NESocket* s);
 
 	template<class Packet>
-	void sendPacket(NESocket* s, Packet& pkt) {
-		_sendPacketBuf.clear();
-		BinSerializer se(_sendPacketBuf);
-		se.io(pkt);
-		send(s. buf.data(), buf.size());
-	}
-
-	void send(NESocket* s, const u8* data, size_t dataSize);
+	void sendPacket(NESocket* s, Packet& pkt);
 
 private:
 	size_t _maxPacketSize = 4096;
@@ -39,5 +32,14 @@ private:
 	Vector<u8>		_sendPacketBuf;
 	Vector< UPtr<NESocket> > _sockList;
 };
+
+template<class Packet> inline
+void NetEngine::sendPacket(NESocket* s, Packet& pkt) {
+	if (!s) return;
+	_sendPacketBuf.clear();
+	BinSerializer se(_sendPacketBuf);
+	se.io(pkt);
+	s->send(buf);
+}
 
 } // namespace

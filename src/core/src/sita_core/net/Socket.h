@@ -38,25 +38,25 @@ public:
 
 	bool accept(Socket & acceptedSocket);
 
-	void sendto(const SockAddr& addr, Span<const u8> data);
-	void sendto(const SockAddr& addr, StrView  data) { sendto(addr, Span<const u8>(reinterpret_cast<const u8*>(data.data()), data.size())); }
+	int sendto(const SockAddr& addr, Span<const u8> data);
+	int sendto(const SockAddr& addr, StrView  data)		{ return sendto(addr, Span<const u8>(reinterpret_cast<const u8*>(data.data()), data.size())); }
 
 	int send(const Span<const u8> data);
-	int send(const StrView  data)		{ return send(Span<const u8>(reinterpret_cast<const u8*>(data.data()), data.size())); }
+	int send(const StrView  data)						{ return send(Span<const u8>(reinterpret_cast<const u8*>(data.data()), data.size())); }
 
-	template<size_t N>
-	int send(const char (&sz)[N])			{ return N ? send(sz, N-1) : 0; }
+	//template<size_t N>
+	//int send(const char (&sz)[N])		{ return N ? send(sz, N-1) : 0; }
 
 	size_t availableBytesToRead();
 
 	int recv(u8* buf, size_t bytesToRecv, int flags);
-	int recv(Vector<u8> & buf, size_t bytesToRecv, int flags);
-	int recv(String & buf, size_t bytesToRecv, int flags);
+	int recvfrom(const SockAddr& addr, u8* buf, size_t bytesToRecv);
 
-	int appendRecv(Vector<u8> & buf, size_t bytesToRecv, int flags);
-	int appendRecv(String & buf, size_t bytesToRecv, int flags);
+	template<class CONTAINER>
+	int recv(CONTAINER& container, size_t bytesToRecv, int flags);
 
-	int recvfrom(SockAddr& addr, Vector<u8> & buf, size_t bytesToRecv);
+	template<class CONTAINER>
+	int appendRecv(CONTAINER& container, size_t bytesToRecv, int flags);
 
 	void setNonBlocking(bool b);
 
@@ -68,6 +68,7 @@ public:
 
 private:
 	SOCKET _sock = kInvalidHandle;
+	size_t kIntMax = static_cast<size_t>(std::numeric_limits<int>::max());
 
 	void _setsockopt(int level, int optname, const void* optval, SockLen optlen);
 
@@ -76,6 +77,39 @@ private:
 		PlatformInit();
 		~PlatformInit();	
 	};
+
 };
+
+template<class CONTAINER> SITA_INLINE
+int Socket::recv(CONTAINER& container, size_t bytesToRecv, int flags) {
+	container.clear();
+	return appendRecv<CONTAINER>(container, bytesToRecv, flags);
+}
+
+template<class CONTAINER> inline
+int Socket::appendRecv(CONTAINER & buf, size_t bytesToRecv, int flags) {
+	auto oldSize = buf.size();
+	auto newSize = oldSize + bytesToRecv;
+	if (newSize < oldSize)
+		throw SITA_ERROR("appendRecv newSize < oldSize");
+
+	buf.resize(newSize);
+	int ret = 0;
+	
+	try {
+		ret = recv(reinterpret_cast<u8*>(&buf[oldSize]), bytesToRecv, flags);
+		if (ret < 0) {
+			buf.resize(oldSize);
+			return ret;
+		}
+	} catch(...) {
+		buf.resize(oldSize);
+		throw;
+	}
+
+	buf.resize(oldSize + ret);
+	return ret;
+}
+
 
 } // namespace

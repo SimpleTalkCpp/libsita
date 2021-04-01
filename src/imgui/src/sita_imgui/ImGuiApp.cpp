@@ -1,4 +1,6 @@
-#include "GameApp.h"
+#include "ImGuiApp.h"
+
+#include "imgui_impl_opengl3.h"
 
 // About Desktop OpenGL function loaders:
 //  Modern desktop OpenGL doesn't have a standard portable header file to load OpenGL function pointers.
@@ -28,14 +30,14 @@ using namespace gl;
 
 namespace sita {
 
-class GameAppImpl : public NonCopyable {
+class ImGuiApp::Impl : public NonCopyable {
 public:
     bool show_demo_window = false;
     bool show_another_window = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-    GameAppImpl(GameApp* owner);
-    ~GameAppImpl();
+    Impl(ImGuiApp* owner);
+    ~Impl();
 
     void run();
 
@@ -43,13 +45,13 @@ public:
     void _render();
 
     bool _running = true;
-    GameApp* _owner = nullptr;
+    ImGuiApp* _owner = nullptr;
 
     SDL_Window* window = nullptr;
     SDL_GLContext gl_context = nullptr;
 };
 
-GameAppImpl::~GameAppImpl() {
+ImGuiApp::Impl::~Impl() {
     // Cleanup
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplSDL2_Shutdown();
@@ -60,14 +62,15 @@ GameAppImpl::~GameAppImpl() {
     SDL_Quit();
 }
 
-void GameAppImpl::run() {
+void ImGuiApp::Impl::run() {
+	_owner->onInit();
     while(_running) {
         _update();
         _render();
     }
 }
 
-void GameAppImpl::_update() {
+void ImGuiApp::Impl::_update() {
         // Poll and handle events (inputs, window resize, etc.)
         // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
         // - When io.WantCaptureMouse is true, do not dispatch mouse input data to your main application.
@@ -91,46 +94,9 @@ void GameAppImpl::_update() {
         ImGui::NewFrame();
 
         _owner->onUpdate(ImGui::GetIO().DeltaTime);
-
-        // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-        if (show_demo_window)
-            ImGui::ShowDemoWindow(&show_demo_window);
-
-        // 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
-        {
-            static float f = 0.0f;
-            static int counter = 0;
-
-            ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
-            ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-            ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-            ImGui::Checkbox("Another Window", &show_another_window);
-
-            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-            ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-
-            if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-                counter++;
-            ImGui::SameLine();
-            ImGui::Text("counter = %d", counter);
-
-            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-            ImGui::End();
-        }
-
-        // 3. Show another simple window.
-        if (show_another_window)
-        {
-            ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
-            ImGui::Text("Hello from another window!");
-            if (ImGui::Button("Close Me"))
-                show_another_window = false;
-            ImGui::End();
-        }
 }
 
-void GameAppImpl::_render() {
+void ImGuiApp::Impl::_render() {
     // Rendering
     ImGui::Render();
 
@@ -143,7 +109,7 @@ void GameAppImpl::_render() {
     SDL_GL_SwapWindow(window);
 }
 
-GameAppImpl::GameAppImpl(GameApp* owner) 
+ImGuiApp::Impl::Impl(ImGuiApp* owner) 
     : _owner(owner)
 {
     int error = SDL_Init(SDL_INIT_EVERYTHING);
@@ -172,7 +138,7 @@ GameAppImpl::GameAppImpl(GameApp* owner)
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
     SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
-    window = SDL_CreateWindow("Dear ImGui SDL2+OpenGL3 example", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, window_flags);
+    window = SDL_CreateWindow("", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, window_flags);
     gl_context = SDL_GL_CreateContext(window);
     SDL_GL_MakeCurrent(window, gl_context);
     SDL_GL_SetSwapInterval(1); // Enable vsync
@@ -229,12 +195,19 @@ GameAppImpl::GameAppImpl(GameApp* owner)
 
 }
 
-GameApp::~GameApp() {
+ImGuiApp::~ImGuiApp() {
+	delete _impl;
 }
 
-void GameApp::run() {
-    auto impl = std::make_unique<GameAppImpl>(this);
-    impl->run();
+void ImGuiApp::setTitle(StrView title) {
+	if (!_impl || !_impl->window) return;
+	SDL_SetWindowTitle(_impl->window, TempString(title).c_str());
+}
+
+void ImGuiApp::run() {
+	delete _impl;
+    _impl = new Impl(this);
+    _impl->run();
 }
 
 } // namespace
