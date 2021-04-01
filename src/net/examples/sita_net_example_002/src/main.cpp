@@ -53,10 +53,10 @@ public:
 					_listenSock.accept(_sock);
 
 					auto col = player.color().Value;
-					_sock.send(fmt::format("color {} {} {}\n", col.x, col.y, col.z));
+					_sock.send(Fmt("color {} {} {}\n", col.x, col.y, col.z));
 
 					isConnected = true;
-				} catch (Error) {
+				} catch (const Error&) {
 					SITA_LOG("error listen");
 				}
 			}
@@ -68,10 +68,10 @@ public:
 					_sock.connect(hostname, static_cast<uint16_t>(port));
 
 					auto col = player.color().Value;
-					_sock.send(fmt::format("color {} {} {}\n", col.x, col.y, col.z));
+					_sock.send(Fmt("color {} {} {}\n", col.x, col.y, col.z));
 
 					isConnected = true;
-				} catch (Error) {
+				} catch (const Error&) {
 					SITA_LOG("error connect");
 				}
 			}

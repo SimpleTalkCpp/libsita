@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../base/sita_base.h"
+
 #include <fmt/format.h>
 
 #if SITA_COMPILER_VC
@@ -18,5 +20,20 @@
 	};
 //------
 
+namespace sita {
+
+template<class... ARGS> inline
+void FmtTo(TempString& outStr, ARGS&&... args) {
+	fmt::format_to(std::back_inserter(outStr), SITA_FORWARD(args)...);
+}
+
+template<class... ARGS> inline
+TempString Fmt(ARGS&&... args) {
+	TempString o;
+	FmtTo(o, SITA_FORWARD(args)...);
+	return o;
+}
+
+}
 
 

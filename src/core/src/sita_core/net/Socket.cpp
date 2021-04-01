@@ -111,7 +111,7 @@ bool Socket::connect(const SockAddr& addr) {
 	return true;
 }
 
-bool Socket::connect(const char* hostname, uint16_t port) {
+bool Socket::connect(StrView hostname, uint16_t port) {
 	SockAddr addr;
 	addr.resolve(hostname, port);
 	return connect(addr);
@@ -128,23 +128,22 @@ bool Socket::accept(Socket & acceptedSocket) {
 	return true;
 }
 
-void Socket::sendto(const SockAddr& addr, const u8* data, size_t dataSize) {
-	if (dataSize > static_cast<size_t>(std::numeric_limits<int>::max()))
+void Socket::sendto(const SockAddr& addr, Span<const u8> data) {
+	if (data.size() > static_cast<size_t>(std::numeric_limits<int>::max()))
 		throw SITA_ERROR("send dataSize is too big");
 
-	int ret =::sendto(_sock, reinterpret_cast<const char*>(data), static_cast<int>(dataSize), 0, &addr._addr, sizeof(addr._addr));
+	int ret =::sendto(_sock, reinterpret_cast<const char*>(data.data()), static_cast<int>(data.size()), 0, &addr._addr, sizeof(addr._addr));
 	if (ret < 0) {
 		throw SITA_ERROR("send");
 	}
 }
 
-int Socket::send(const u8* data, size_t dataSize) {
+int Socket::send(Span<const u8> data) {
 	if (!isValid()) return 0;
-
-	if (dataSize > static_cast<size_t>(std::numeric_limits<int>::max()))
+	if (data.size() > static_cast<size_t>(std::numeric_limits<int>::max()))
 		throw SITA_ERROR("send dataSize is too big");
 
-	int ret =::send(_sock, reinterpret_cast<const char*>(data), static_cast<int>(dataSize), 0);
+	int ret =::send(_sock, reinterpret_cast<const char*>(data.data()), static_cast<int>(data.size()), 0);
 	return ret;
 }
 

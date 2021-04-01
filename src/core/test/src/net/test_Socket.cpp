@@ -1,15 +1,13 @@
 #include <sita_core/base/UnitTest.h>
 #include <sita_core/net/Socket.h>
 
-#include <EASTL/vector.h>
-
-namespace sita { namespace test {
+namespace sita {
 
 class Test_Socket : public UnitTestBase {
 public:
 	
 	void test_resolveIPv4() {
-		eastl::vector<int> a;
+		Vector<int> a;
 
 
 		IPv4 ip;
@@ -20,8 +18,9 @@ public:
 	}
 };
 
-}} // namespace 
+} // namespace 
 
 void test_Socket() {
+	using namespace sita;
 	SITA_TEST_CASE(Test_Socket, test_resolveIPv4());
 }

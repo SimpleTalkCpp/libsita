@@ -30,7 +30,7 @@ IPv4 SockAddr::ipv4() const {
 
 u16 SockAddr::port() const {
 	switch (family()) {
-		case Family::IPv4: return ntohs(_addr_in.sin_port);		
+		case Family::IPv4: return ntohs(_addr_in.sin_port);
 		case Family::IPv6: return ntohs(_addr_in6.sin6_port);
 		default: throw SITA_ERROR("");
 	}
@@ -57,7 +57,7 @@ bool SockAddr::tryResolve(StrView hostname, u16 port, Family family) {
 	Socket::platformInit();
 	reset();
 
-	String hostnameStr(hostname);
+	TempString hostnameStr(hostname);
 
 	struct addrinfo hints = {};
 	hints.ai_family = enum_int(family);

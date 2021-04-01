@@ -37,7 +37,7 @@ private:
 
 	Vector<u8>		_recvPacketBuf;
 	Vector<u8>		_sendPacketBuf;
-	Vector< std::unique_ptr<NESocket> > _sockList;
+	Vector< UPtr<NESocket> > _sockList;
 };
 
 } // namespace

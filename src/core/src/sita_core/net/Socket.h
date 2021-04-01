@@ -34,18 +34,15 @@ public:
 	void listen(int backlog = 64);
 
 	bool connect(const SockAddr& addr);
-	bool connect(const char* hostname, uint16_t port);
+	bool connect(StrView hostname, uint16_t port);
 
 	bool accept(Socket & acceptedSocket);
 
-	void sendto(const SockAddr& addr, const u8* data, size_t dataSize);
-	void sendto_c_str(const SockAddr& addr, const char* data) { sendto(addr, reinterpret_cast<const u8*>(data), strlen(data)); }
+	void sendto(const SockAddr& addr, Span<const u8> data);
+	void sendto(const SockAddr& addr, StrView  data) { sendto(addr, Span<const u8>(reinterpret_cast<const u8*>(data.data()), data.size())); }
 
-	int send(const u8* data, size_t dataSize);
-	int send(const Vector<u8> & data)	{ return send(data.data(), data.size()); }
-	int send(const String & data)		{ return send(reinterpret_cast<const u8*>(data.data()), data.size()); }
-
-	size_t send_c_str(const char* data)		{ return send(reinterpret_cast<const u8*>(data), strlen(data)); }
+	int send(const Span<const u8> data);
+	int send(const StrView  data)		{ return send(Span<const u8>(reinterpret_cast<const u8*>(data.data()), data.size())); }
 
 	template<size_t N>
 	int send(const char (&sz)[N])			{ return N ? send(sz, N-1) : 0; }

@@ -2,7 +2,7 @@
 #include <sita_core/base/BinSerializer.h>
 #include <sita_core/base/BinDeserializer.h>
 
-namespace sita { namespace test {
+namespace sita {
 
 class Test_BinSerializer : public UnitTestBase {
 public:
@@ -84,10 +84,17 @@ public:
 	public:
 		int i = 0;
 		float f = 0;
+		String str;
+		String_<128> str128;
+
+		Vector<int> vec;
+		Vector_<int, 128> vec128;
 
 		template<class SE>
 		void io(SE& se) {
 			se << i << f;
+			se << str << str128;
+			se << vec << vec128;
 		}
 	};
 
@@ -97,6 +104,13 @@ public:
 		MyData src;
 		src.i = 100;
 		src.f = 0.2f;
+		src.str = "hello";
+		src.str128 = "world";
+
+		for (int i = 0; i < 60; i++) {
+			src.vec.push_back(i);
+			src.vec128.push_back(i);
+		}
 
 		BinSerializer(buf) << src;
 		SITA_DUMP_HEX(buf);
@@ -106,13 +120,22 @@ public:
 
 		SITA_TEST_CHECK_SLIENT(src.i == dst.i);
 		SITA_TEST_CHECK_SLIENT(src.f == dst.f);
+		SITA_TEST_CHECK_SLIENT(src.str    == dst.str);
+		SITA_TEST_CHECK_SLIENT(src.str128 == dst.str128);
+		SITA_TEST_CHECK_SLIENT(src.vec    == dst.vec);
+		SITA_TEST_CHECK_SLIENT(src.vec128 == dst.vec128);
 	};
 };
 
-}} // namespace 
+} // namespace 
+
 
 void test_BinSerializer() {
+	using namespace sita;
+
 	SITA_TEST_CASE(Test_BinSerializer, test_class());
+
+	return;
 
 #if 1
 	SITA_TEST_CASE(Test_BinSerializer, test_fixed<u8 >(0x100ULL,              1));

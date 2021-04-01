@@ -22,8 +22,9 @@ public:
 
 	template<class... Args>
 	void write(Level lv, const Args&... args) {
-		String s = fmt::format(SITA_FORWARD(args)...);
-		onWrite(lv, s);
+		TempString tmp;
+		FmtTo(tmp, SITA_FORWARD(args)...);
+		onWrite(lv, tmp);
 	}
 
 	void onWrite(Level lv, StrView str);

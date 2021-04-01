@@ -6,7 +6,7 @@
 #define	SITA_TEST_CASE(TestClass, TestFunc) \
 	do{ \
 		SITA_LOG("\n[--TEST_CASE--] " #TestClass "." #TestFunc "\n"); \
-		sita::test::TestClass testObj; \
+		TestClass testObj; \
 		testObj.TestFunc; \
 	}while(false)
 //----
