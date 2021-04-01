@@ -123,6 +123,10 @@ template<> inline
 void BinSerializer_io(BinDeserializer& se, String& v) {
 	size_t len = 0;
 	se.io(len);
+
+	if (len * sizeof(char) > se.remain())
+		throw SITA_ERROR("BinDeserializer out of range");
+
 	v.resize(len);
 	se.io_raw(reinterpret_cast<u8*>(v.data()), len);
 }
@@ -131,8 +135,11 @@ template<class T, size_t N, bool bEnableOverflow> inline
 void BinSerializer_io(BinDeserializer& se, StringT<T, N, bEnableOverflow>& v) {
 	size_t len = 0;
 	se.io(len);
-	v.resize(len);
 
+	if (len * sizeof(T) > se.remain())
+		throw SITA_ERROR("BinDeserializer out of range");
+
+	v.resize(len);
 	if (sizeof(T) == 1) {
 		se.io_raw(reinterpret_cast<u8*>(v.data()), len);
 	} else {
@@ -146,6 +153,10 @@ template<class T> inline
 void BinSerializer_io(BinDeserializer& se, Vector<T>& v) {
 	size_t len = 0;
 	se.io(len);
+
+	if (len * sizeof(T) > se.remain())
+		throw SITA_ERROR("BinDeserializer out of range");
+
 	v.resize(len);
 	for (size_t i = 0; i < len; i++) {
 		se.io(v[i]);
@@ -156,6 +167,10 @@ template<class T, size_t N, bool bEnableOverflow> inline
 void BinSerializer_io(BinDeserializer& se, Vector_<T, N, bEnableOverflow>& v) {
 	size_t len = 0;
 	se.io(len);
+
+	if (len * sizeof(T) > se.remain())
+		throw SITA_ERROR("BinDeserializer out of range");
+
 	v.resize(len);
 	for (size_t i = 0; i < len; i++) {
 		se.io(v[i]);
