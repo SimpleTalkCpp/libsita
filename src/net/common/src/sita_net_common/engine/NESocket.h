@@ -30,8 +30,8 @@ protected:
 
 	Status	_status = Status::None;
 
-	size_t _totalRecvBytes = 0;
-	size_t _totalSendBytes = 0;
+	u64 _totalRecvBytes = 0;
+	u64 _totalSendBytes = 0;
 };
 
 

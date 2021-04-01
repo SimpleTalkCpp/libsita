@@ -3,6 +3,9 @@
 namespace sita {
 
 void NetEngine::update(int timeoutMilliseconds) {
+	_recvStatis.lastUpdate = 0;
+	_sendStatis.lastUpdate = 0;
+
 	const auto totalSockCount = _listenSockets.size() + _sockets.size();
 	_pollfds.clear();
 	_pollfds.reserve(totalSockCount);
@@ -40,6 +43,17 @@ void NetEngine::update(int timeoutMilliseconds) {
 			pf++;
 		}
 	}
+
+	{
+		auto t = Clock::now();
+		std::chrono::duration<double> deltaTime = t - _statisLastSecondStart;
+		if (deltaTime.count() >= 1.0) {
+			_recvStatis._calcLastSecond(deltaTime.count());
+			_sendStatis._calcLastSecond(deltaTime.count());
+			_statisLastSecondStart = t;
+		}
+	}
+
 }
 
 void NetEngine::_addToPoll(Vector<UPtr<NESocket>>& list) {
@@ -93,6 +107,12 @@ void NetEngine::_updateSocket(NESocket* s, PollFlags pf) {
 				_onError(s, SITA_ERROR("error connect"));
 				return;
 			}
+
+			if (enumHas(pf, PollFlags::Out)) {
+				s->_status = NESocket::Status::Connected;
+				_onConnect(s);
+				return;
+			}
 		} break;
 
 		case NESocket::Status::Connected: {
@@ -110,7 +130,7 @@ void NetEngine::_updateSocket(NESocket* s, PollFlags pf) {
 				try {
 					onRecv(s);
 				} catch (...) {
-					s->close();
+					_onError(s, SITA_ERROR("onRecv"));
 				}
 			}
 
@@ -196,30 +216,32 @@ void NetEngine::onRecv(NESocket* s) {
 		}
 
 		int ret = s->_sock.recv(_recvPacketBuf, sizeof(hdr.len), MSG_PEEK);
-		if (ret <= sizeof(hdr.len)) {
-			// error or disconnected
+		if (ret < sizeof(hdr.len)) {
+			_onError(s, SITA_ERROR("recv header"));
+			return;
 		}
 
 		{
 			BinDeserializer se(_recvPacketBuf);
 			se.io_fixed(hdr.len);
+			hdr.len ^= _lenKey;
 		}
 		
 		if (bytesToRead < hdr.len)
 			break;
 
 		ret = s->_sock.recv(_recvPacketBuf, hdr.len, 0);
-		if (ret <= hdr.len) {
-			// error or disconnected
+		if (ret < hdr.len) {
+			_onError(s, SITA_ERROR("recv"));
+			return;
 		}
+
+		_addRecvStatis(s, ret);
 
 		{
 			BinDeserializer se(_recvPacketBuf);
 			se.io(hdr);
-		}
-		{
-			BinDeserializer se(_recvPacketBuf);
-			onRecvPacket(s, hdr, se);
+			onRecvPacket(s, hdr, _recvPacketBuf);
 		}
 	}
 
