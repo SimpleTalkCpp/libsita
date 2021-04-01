@@ -18,6 +18,13 @@ public:
 	using NativeHandle = int;
 	static const NativeHandle kInvalidHandle = -1;
 #endif
+	Socket() = default;
+	Socket(Socket && r) noexcept { operator=(std::move(r)); }
+	void operator=(Socket && r) noexcept {
+		close();
+		_sock = r._sock;
+		r._sock = kInvalidHandle;
+	}
 
 	~Socket() { close(); }
 
@@ -29,7 +36,7 @@ public:
 
 	void setReuseAddr(bool b);
 	void bind(const SockAddr& addr);
-	void bind(const char* hostname, uint16_t port);
+	void bind(StrView hostname, uint16_t port);
 
 	void listen(int backlog = 64);
 
@@ -66,16 +73,18 @@ public:
 
 	int getSockError();
 
+	NativeHandle nativeHandle() { return _sock; }
+
 private:
 	SOCKET _sock = kInvalidHandle;
-	size_t kIntMax = static_cast<size_t>(std::numeric_limits<int>::max());
+	static const size_t kIntMax = static_cast<size_t>(std::numeric_limits<int>::max());
 
 	void _setsockopt(int level, int optname, const void* optval, SockLen optlen);
 
 	class PlatformInit {
 	public:
 		PlatformInit();
-		~PlatformInit();	
+		~PlatformInit();
 	};
 
 };

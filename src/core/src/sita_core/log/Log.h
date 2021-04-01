@@ -21,7 +21,7 @@ public:
 	};
 
 	template<class... Args>
-	void write(Level lv, const Args&... args) {
+	void write(Level lv, Args&&... args) {
 		TempString tmp;
 		FmtTo(tmp, SITA_FORWARD(args)...);
 		onWrite(lv, tmp);

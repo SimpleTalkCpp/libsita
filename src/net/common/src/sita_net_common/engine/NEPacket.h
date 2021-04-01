@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../sita_net_common-pch.h"
+#include "../sita_net_common-config.h"
 
 namespace sita {
 

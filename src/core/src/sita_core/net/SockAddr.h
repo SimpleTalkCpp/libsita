@@ -58,6 +58,10 @@ public:
 	void resolve	(StrView hostname, u16 port, Family family = Family::IPv4);
 	bool tryResolve	(StrView hostname, u16 port, Family family = Family::IPv4);
 
+	auto onFormat(fmt::format_context& ctx) const {
+		return fmt::format_to(ctx.out(), "{}:{}", ipv4(), port());
+	}
+
 	static const size_t kAddrBufSize = 32;
 friend class Socket;
 protected:
@@ -74,3 +78,4 @@ protected:
 } // namespace
 
 SITA_FORMATTER(sita::IPv4)
+SITA_FORMATTER(sita::SockAddr)

@@ -31,3 +31,28 @@
 
 #define SITA_SRC_LOC	SrcLoc(__FILE__, __LINE__, SITA_FUNC_NAME_SZ)
 
+#define SITA_ENUM_BITWISE_OPERATOR(T) \
+	SITA_INLINE T operator~ (T  a)      { return static_cast<T>(~enumInt(a)); } \
+	SITA_INLINE T operator| (T  a, T b) { return static_cast<T>(enumInt(a) | enumInt(b)); } \
+	SITA_INLINE T operator& (T  a, T b) { return static_cast<T>(enumInt(a) & enumInt(b)); } \
+	SITA_INLINE T operator^ (T  a, T b) { return static_cast<T>(enumInt(a) ^ enumInt(b)); } \
+	SITA_INLINE void operator|=(T& a, T b) { a = static_cast<T>(enumInt(a) | enumInt(b)); } \
+	SITA_INLINE void operator&=(T& a, T b) { a = static_cast<T>(enumInt(a) & enumInt(b)); } \
+	SITA_INLINE void operator^=(T& a, T b) { a = static_cast<T>(enumInt(a) ^ enumInt(b)); } \
+//--------
+
+#define SITA_ENUM_ARITHMETIC_OPERATOR(T) \
+	SITA_INLINE T operator+ (T  a, T b) { return static_cast<T>(enumInt(a) + enumInt(b)); } \
+	SITA_INLINE T operator- (T  a, T b) { return static_cast<T>(enumInt(a) - enumInt(b)); } \
+	SITA_INLINE T operator* (T  a, T b) { return static_cast<T>(enumInt(a) * enumInt(b)); } \
+	SITA_INLINE T operator/ (T  a, T b) { return static_cast<T>(enumInt(a) / enumInt(b)); } \
+	SITA_INLINE void operator+=(T& a, T b) { a = static_cast<T>(enumInt(a) + enumInt(b)); } \
+	SITA_INLINE void operator-=(T& a, T b) { a = static_cast<T>(enumInt(a) - enumInt(b)); } \
+	SITA_INLINE void operator*=(T& a, T b) { a = static_cast<T>(enumInt(a) * enumInt(b)); } \
+	SITA_INLINE void operator/=(T& a, T b) { a = static_cast<T>(enumInt(a) / enumInt(b)); } \
+//--------
+
+#define SITA_ENUM_ALL_OPERATOR(T) \
+	SITA_ENUM_BITWISE_OPERATOR(T) \
+	SITA_ENUM_ARITHMETIC_OPERATOR(T) \
+//-------

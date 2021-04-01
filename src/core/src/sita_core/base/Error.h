@@ -3,7 +3,7 @@
 #include "../string/String.h"
 #include "../string/Fmt.h"
 
-#define SITA_ERROR(...) Error(SITA_SRC_LOC, Fmt(__VA_ARGS__));
+#define SITA_ERROR(...) Error(SITA_SRC_LOC, Fmt(__VA_ARGS__))
 
 namespace sita {
 

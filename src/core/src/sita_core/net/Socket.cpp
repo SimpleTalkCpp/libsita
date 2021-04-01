@@ -68,7 +68,7 @@ void Socket::_setsockopt(int level, int optname, const void* optval, SockLen opt
 		throw SITA_ERROR("setsockopt");
 }
 
-void Socket::bind(const char* hostname, uint16_t port) {
+void Socket::bind(StrView hostname, uint16_t port) {
 	SockAddr addr;
 	addr.resolve(hostname, port);
 	return bind(addr);

@@ -29,8 +29,7 @@ endfunction()
 
 function(sita_add_library target_name src_path)
 	file(GLOB_RECURSE src_files
-		"${src_path}/src/*.h"
-		"${src_path}/src/*.cpp"
+		"${src_path}/src/*.*"
 	)	
 	sita_source_group(${src_path} "${src_files}")
 	
@@ -41,8 +40,7 @@ endfunction()
 
 function(sita_add_executable target_name src_path)
 	file(GLOB_RECURSE src_files
-		"${src_path}/src/*.h"
-		"${src_path}/src/*.cpp"
+		"${src_path}/src/*.*"
 	)	
 	sita_source_group(${src_path} "${src_files}")
 	

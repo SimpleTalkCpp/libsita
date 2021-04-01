@@ -64,6 +64,8 @@ template<class T> inline constexpr typename std::underlying_type<T>::type       
 template<class T> inline constexpr typename std::underlying_type<T>::type       & enumIntRef(      T& value) { return *reinterpret_cast<      typename std::underlying_type<T>::type*>(&value); }
 template<class T> inline constexpr typename std::underlying_type<T>::type const & enumIntRef(const T& value) { return *reinterpret_cast<const typename std::underlying_type<T>::type*>(&value); }
 
+template<class T> inline bool constexpr enumHas		(const T& a, const T& b) { return static_cast<T>(enumInt(a) & enumInt(b)) != static_cast<T>(0); }
+
 template<class T> SITA_INLINE T* constCast(const T* v) { return const_cast<T*>(v); }
 template<class T> SITA_INLINE T& constCast(const T& v) { return const_cast<T&>(v); }
 
