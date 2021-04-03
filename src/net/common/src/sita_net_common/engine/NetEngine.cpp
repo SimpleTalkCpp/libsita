@@ -37,6 +37,7 @@ void NetEngine::update(int timeoutMilliseconds) {
 				} catch (const Error& err) {
 					_onError(s, err);
 				} catch (...) {
+					_onError(s, SITA_ERROR(""));
 					throw;
 				}
 			}

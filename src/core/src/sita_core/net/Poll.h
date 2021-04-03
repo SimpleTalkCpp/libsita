@@ -25,7 +25,7 @@ SITA_ENUM_BITWISE_OPERATOR(PollFlags)
 	}
 #else
 	using PollFd = ::pollfd;
-	inline int Poll(Span<PollFd> fdArray, int timeoutMilliseconds) {
+	inline int Poll(Span<PollFd> fds, int timeoutMilliseconds) {
 		int ret = ::poll(fds.data(), fds.size(), timeoutMilliseconds);
 		return ret;
 	}
