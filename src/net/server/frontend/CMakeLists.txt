@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-set(PROJECT_NAME sita_net_gateway)
+set(PROJECT_NAME sita_net_frontend)
 message("==== ${PROJECT_NAME} ====")
 project(${PROJECT_NAME})
 
