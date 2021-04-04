@@ -115,8 +115,7 @@ void BinDeserializer::_io_vary_signed(T& value) {
 	static_assert(sizeof(U) == sizeof(T));
 	U tmp;
 	_io_vary_unsigned(tmp);
-	T v = static_cast<T>(tmp);
-	value = (v >> 1) ^ ( -(v & 1));
+	value = static_cast<T>(tmp >> 1) ^ -static_cast<T>(tmp & 1);
 }
 
 //===============================
