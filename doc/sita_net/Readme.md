@@ -1,4 +1,4 @@
-# Sita Game Network Framework
+# Sita - Game Network Framework
 
 ## Socket Class (sita_core/net/Socket.h)
 - C++ BSD Socket Wrapper class

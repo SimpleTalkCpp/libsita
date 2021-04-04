@@ -1,9 +1,9 @@
-# What's `libsita`
-- libsita is demo source code for C++ tutorial purpose
-- The name `libsita` came from `[lib]`rary `[Si]`mple `[Ta]`lk C++
+# What is libsita
+- Demo source code for C++ tutorial purpose
+- The name `libsita` came from [lib]rary [Si]mple [Ta]lk C++
 ## Modules
-- [Core Framework - Readme](doc/sita_core/Readme.md)
-- [3D Renderer Framework - Readme](doc/sita_net/Readme.md)
+- [Core Library - Readme](doc/sita_core/Readme.md)
+- [Real-time 3D Renderer Framework - Readme](doc/sita_net/Readme.md)
 - [Game Network Framework - Readme](doc/sita_net/Readme.md)
 
 

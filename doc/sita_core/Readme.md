@@ -1,4 +1,4 @@
-# Sita Core Library
+# Sita - Core Library
 
 ## Base
 - Binary Serializer / BinDeserializer
