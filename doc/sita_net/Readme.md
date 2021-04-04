@@ -3,6 +3,7 @@
 ## Socket Class (sita_core/net/Socket.h)
 - C++ BSD Socket Wrapper class
 - Cross-platform layer (Windows / Mac / Linux)
+- Support non-blocking socket
 
 ## NetEngine
 - Handle multiple TCP connections (up to 10,000+)
