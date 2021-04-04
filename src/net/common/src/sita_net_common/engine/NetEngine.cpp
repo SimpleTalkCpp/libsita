@@ -205,8 +205,6 @@ void NetEngine::onRecv(NESocket* s) {
 
 	NEPacketHeader hdr;
 
-	const size_t _maxPacketPerFrame = 100;
-
 	_recvPacketBuf.clear();
 	_recvPacketBuf.resize(_maxPacketSize);
 
