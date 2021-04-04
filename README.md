@@ -3,7 +3,7 @@
 - The name `libsita` came from [lib]rary [Si]mple [Ta]lk C++
 ## Modules
 - [Core Library - Readme](doc/sita_core/Readme.md)
-- [Real-time 3D Renderer Framework - Readme](doc/sita_net/Readme.md)
+- [Real-time 3D Renderer Framework - Readme](doc/sita_render/Readme.md)
 - [Game Network Framework - Readme](doc/sita_net/Readme.md)
 
 
