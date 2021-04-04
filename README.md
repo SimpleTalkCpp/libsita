@@ -1,6 +1,15 @@
-# How to Build 
+# What's `libsita`
+- libsita is demo source code for C++ tutorial purpose
+- The name `libsita` came from `[lib]`rary `[Si]`mple `[Ta]`lk C++
+## Modules
+- [Core Framework - Readme](doc/sita_core/Readme.md)
+- [3D Renderer Framework - Readme](doc/sita_net/Readme.md)
+- [Game Network Framework - Readme](doc/sita_net/Readme.md)
 
-## Windows
+
+## How to Build 
+
+### build on Windows
 ```
 install_vcpkg_packages.bat
 gen_vs2019.bat
@@ -9,7 +18,7 @@ gen_vs2019.bat
 
 ![[<img src="doc/screenshot/2021-03-17_Project_Setup-Windows-quad.png">](doc/screenshot/2021-03-17_Project_Setup-Windows.png)]
 
-## Mac
+### build on Mac
 ```
 sh install_vcpkg_packages.sh
 sh gen_xcode.sh
@@ -18,7 +27,7 @@ sh gen_xcode.sh
 
 ![[<img src="doc/screenshot/2021-03-17_Project_Setup-Mac-quad.png">](doc/screenshot/2021-03-17_Project_Setup-Mac.png)]
 
-## Ubuntu Linux
+### build on Ubuntu Linux
 ```
 sh install_ubunta_packages.sh
 sh install_vcpkg_packages.sh
@@ -26,7 +35,7 @@ make
 make run
 ```
 
-## Visual Studio Code + Cmake Tool (Works on Win/Mac/Linux)
+### Visual Studio Code + Cmake Tool (Works on Win/Mac/Linux)
 - install vscode extension `CMake Tools` and `CMake`
 - Build and Run from bottom status bar
 
