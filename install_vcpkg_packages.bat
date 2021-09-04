@@ -8,8 +8,9 @@ call externals\vcpkg\bootstrap-vcpkg.bat
 
 externals\vcpkg\vcpkg install fmt:x64-windows --recurse
 externals\vcpkg\vcpkg install eastl:x64-windows --recurse
+externals\vcpkg\vcpkg install glew:x64-windows --recurse
 
 externals\vcpkg\vcpkg install imgui[sdl2-binding]:x64-windows --recurse
-externals\vcpkg\vcpkg install imgui[opengl3-glew-binding]:x64-windows --recurse
+externals\vcpkg\vcpkg install imgui[opengl3-binding]:x64-windows --recurse
 
 @pause

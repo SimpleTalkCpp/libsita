@@ -12,10 +12,9 @@ project(libsita)
 find_package(fmt CONFIG REQUIRED)
 find_package(EABase CONFIG REQUIRED)
 find_package(EASTL CONFIG REQUIRED)
+find_package(GLEW CONFIG REQUIRED)
 find_package(SDL2 CONFIG REQUIRED)
 find_package(imgui CONFIG REQUIRED)
-
-
 
 function(sita_source_group src_path src_files)
 	foreach(FILE ${src_files}) 
